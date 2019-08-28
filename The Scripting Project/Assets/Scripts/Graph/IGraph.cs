@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface IGraph
 {
+    INode StartNode { get; }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 [System.Serializable]
-public class Node : INode
+public abstract class Node : INode
 {
     [JsonIgnore]
     public Vector2 Position { get => position; set => position = value; }

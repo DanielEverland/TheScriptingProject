@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IDirectionalOutputSocket : ISocket
 {
-    IDirectionalInputSocket Target { get; }
+    IReadOnlyList<IDirectionalInputSocket> Targets { get; }
 }
 public interface IDirectionalOutputSocket<T> : ISocket<T>, IDirectionalOutputSocket
 {

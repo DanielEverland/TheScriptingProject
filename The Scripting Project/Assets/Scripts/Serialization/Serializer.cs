@@ -14,7 +14,7 @@ public static class Serializer
     {
         settings = new JsonSerializerSettings()
         {
-            ContractResolver = new TestConverter(),
+            ContractResolver = new FieldOnlyConverter(),
         };
     }
 

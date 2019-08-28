@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 
 public class DirectionalOutputSocket : IDirectionalOutputSocket
 {
-    public IDirectionalInputSocket Target => target;
+    public IReadOnlyList<IDirectionalInputSocket> Targets => targets;
 
     [JsonProperty]
-    private IDirectionalInputSocket target = null;
+    private List<IDirectionalInputSocket> targets = null;
 }
 public class DirectionalOutputSocket<T> : DirectionalOutputSocket, IDirectionalOutputSocket<T>
 {
