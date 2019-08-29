@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartNode : DirectionalNode
+public class StartNode : Node, INodeOutputHandler
 {
-    protected override void CreateOutputSockets(List<IDirectionalOutputSocket> list)
+    public StartNode()
     {
-        list.Add(new DirectionalOutputSocket());
+        outputSockets = new List<IDirectionalOutputSocket>()
+        {
+            new DirectionalOutputSocket(),
+        };
     }
+
+    public IReadOnlyList<IDirectionalOutputSocket> OutputSockets => outputSockets;
+
+    private List<IDirectionalOutputSocket> outputSockets;
 }

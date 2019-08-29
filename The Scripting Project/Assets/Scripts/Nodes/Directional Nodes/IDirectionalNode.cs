@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDirectionalNode : INode
+public interface IDirectionalNode : INode, INodeInputHandler, INodeOutputHandler
 {
-    IReadOnlyList<IDirectionalOutputSocket> OutputSockets { get; }
-    IReadOnlyList<IDirectionalInputSocket> InputSockets { get; }
 }
