@@ -11,7 +11,7 @@ public class NodeElement : MonoBehaviour
 
     private void Start()
     {
-        Initialize(new StartNode());
+        Initialize(new TestNode());
     }
     public void Initialize(INode node)
     {
