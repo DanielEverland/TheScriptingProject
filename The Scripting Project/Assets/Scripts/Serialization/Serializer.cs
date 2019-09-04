@@ -15,6 +15,7 @@ public static class Serializer
         settings = new JsonSerializerSettings()
         {
             ContractResolver = new FieldOnlyConverter(),
+            TypeNameHandling = TypeNameHandling.All,
         };
     }
 
@@ -23,6 +24,10 @@ public static class Serializer
     public static string Serialize(object obj)
     {
         return JsonConvert.SerializeObject(obj, Formatting.Indented, settings);
+    }
+    public static T Deserialize<T>(string json)
+    {
+        return JsonConvert.DeserializeObject<T>(json);
     }
 
     private class FieldOnlyConverter : DefaultContractResolver

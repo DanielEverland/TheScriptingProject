@@ -11,8 +11,12 @@ public class GraphTester : MonoBehaviour
     {
         IGraph testGraph = GetTestGraph();
 
-        constructor.CreateGraph(testGraph);
-        constructor.CreateGraph(testGraph);
+        string serializedObject = Serializer.Serialize(testGraph);
+        Debug.Log(serializedObject);
+
+        IGraph deserializedGraph = Serializer.Deserialize<DirectedGraph>(serializedObject);
+
+        constructor.CreateGraph(deserializedGraph);
     }
     private IGraph GetTestGraph()
     {

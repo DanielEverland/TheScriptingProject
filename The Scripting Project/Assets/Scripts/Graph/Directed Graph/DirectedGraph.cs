@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class DirectedGraph : IDirectedGraph
 {
     public DirectedGraph()
     {
-        startNode = new StartNode();
-        AddNode(startNode);
+        AddNode(new StartNode());
     }
 
-    public INode StartNode => startNode;
+    public INode StartNode => allNodes[0];
     public IReadOnlyList<INode> AllNodes => allNodes;
 
-    private StartNode startNode;
+    [JsonProperty]
     private List<INode> allNodes = new List<INode>();
 
     public void AddNode(INode node)
