@@ -9,10 +9,6 @@ public class NodeElement : MonoBehaviour
 
     private bool hasInitialized = false;
 
-    private void Start()
-    {
-        Initialize(new TestNode());
-    }
     public void Initialize(INode node)
     {
         if (hasInitialized)
@@ -20,7 +16,9 @@ public class NodeElement : MonoBehaviour
 
         hasInitialized = true;
 
+        SetName(node.GetType());
         SetPosition(node.Position);
+        SetSize(node.Size);
 
         if (node is INodeInputHandler inputHandler)
             HandleInputSockets(inputHandler);
@@ -28,9 +26,20 @@ public class NodeElement : MonoBehaviour
         if (node is INodeOutputHandler outputHandler)
             HandleOutputSockets(outputHandler);
     }
+    private void SetSize(Vector2 size)
+    {
+        RectTransform rectTrans = (RectTransform)transform;
+
+        rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x * GraphUtility.NodeUnitInPixels);
+        rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y * GraphUtility.NodeUnitInPixels);
+    }
+    private void SetName(System.Type nodeType)
+    {
+        name = $"Node ({nodeType.Name})";
+    }
     private void SetPosition(Vector2 position)
     {
-        ((RectTransform)transform).anchoredPosition = position;
+        ((RectTransform)transform).anchoredPosition = position * GraphUtility.NodeUnitInPixels;
     }
     private void HandleInputSockets(INodeInputHandler inputHandler)
     {
