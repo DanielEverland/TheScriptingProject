@@ -20,7 +20,7 @@ public class GraphTester : MonoBehaviour
     }
     private IGraph GetTestGraph()
     {
-        DirectedGraph graph = new DirectedGraph();
+        DirectedGraph graph = DirectedGraph.CreateGraphWithStartNode();
 
         TestNode node = new TestNode();
         node.Position += new Vector2(1, 0);

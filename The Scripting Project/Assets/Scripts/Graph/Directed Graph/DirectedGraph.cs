@@ -5,11 +5,6 @@ using Newtonsoft.Json;
 
 public class DirectedGraph : IDirectedGraph
 {
-    public DirectedGraph()
-    {
-        AddNode(new StartNode());
-    }
-
     public INode StartNode => allNodes[0];
     public IReadOnlyList<INode> AllNodes => allNodes;
 
@@ -19,5 +14,13 @@ public class DirectedGraph : IDirectedGraph
     public void AddNode(INode node)
     {
         allNodes.Add(node);
+    }
+    public static DirectedGraph CreateGraphWithStartNode()
+    {
+        DirectedGraph newGraph = new DirectedGraph();
+
+        newGraph.AddNode(new StartNode());
+
+        return newGraph;
     }
 }

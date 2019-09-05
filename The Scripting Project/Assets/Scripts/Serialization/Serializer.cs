@@ -15,7 +15,7 @@ public static class Serializer
         settings = new JsonSerializerSettings()
         {
             ContractResolver = new FieldOnlyConverter(),
-            TypeNameHandling = TypeNameHandling.All,
+            TypeNameHandling = TypeNameHandling.Auto,
         };
     }
 
@@ -27,7 +27,7 @@ public static class Serializer
     }
     public static T Deserialize<T>(string json)
     {
-        return JsonConvert.DeserializeObject<T>(json);
+        return JsonConvert.DeserializeObject<T>(json, settings);
     }
 
     private class FieldOnlyConverter : DefaultContractResolver
