@@ -8,6 +8,8 @@ public static class GraphUtility
     public const float NodeUnitInPixels = 32;
     public const string DebugGraphFileName = "/Serialized Data/debuggraph.json";
 
+    public static bool IsDebugGraphAvailable => File.Exists(GetDebugGraphFileName());
+
     public static string GetDebugGraphFileName()
     {
         return Application.dataPath + DebugGraphFileName;
@@ -19,9 +21,7 @@ public static class GraphUtility
 
         string json = Serializer.Serialize(GraphConstructor.CurrentGraph);
         string fullFilename = GraphUtility.GetDebugGraphFileName();
-
-        Debug.Log("Saving to " + fullFilename);
-
+        
         File.WriteAllText(fullFilename, json);
     }
     public static IGraph LoadDebugGraph()
