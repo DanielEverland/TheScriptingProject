@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GraphConstructor : MonoBehaviour
 {
+    public static IGraph CurrentGraph { get; private set; }
+
     [SerializeField]
     private Transform graphCanvas;
     [SerializeField]
@@ -17,6 +19,7 @@ public class GraphConstructor : MonoBehaviour
             DestroyCurrentGraphObject();
 
         currentGraphObject = CreateGraphObject();
+        CurrentGraph = graph;
 
         foreach (INode node in graph.AllNodes)
         {
