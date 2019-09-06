@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeElement : MonoBehaviour
+public class NodeElement : MonoBehaviour, IUIInputElement
 {
+    public RectTransform rectTransform => (RectTransform)transform;
+
     [SerializeField]
     private AnchorElement anchorPrefab = null;
 
@@ -17,7 +19,7 @@ public class NodeElement : MonoBehaviour
         hasInitialized = true;
 
         SetName(node.GetType());
-        SetPosition(node.Position);
+        SetScreenPosition(node.Position);
         SetSize(node.Size);
 
         if (node is INodeInputHandler inputHandler)
@@ -26,6 +28,8 @@ public class NodeElement : MonoBehaviour
         if (node is INodeOutputHandler outputHandler)
             HandleOutputSockets(outputHandler);
     }
+
+
     private void SetSize(Vector2 size)
     {
         RectTransform rectTrans = (RectTransform)transform;
@@ -37,7 +41,7 @@ public class NodeElement : MonoBehaviour
     {
         name = $"Node ({nodeType.Name})";
     }
-    private void SetPosition(Vector2 position)
+    private void SetScreenPosition(Vector2 position)
     {
         ((RectTransform)transform).anchoredPosition = position * GraphUtility.NodeUnitInPixels;
     }

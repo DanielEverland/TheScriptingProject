@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SocketElement : MonoBehaviour
+public class SocketElement : MonoBehaviour, IUIInputElement
 {
+    public RectTransform rectTransform => (RectTransform)transform;
+
     public void Initialize(ISocket socket)
     {
 

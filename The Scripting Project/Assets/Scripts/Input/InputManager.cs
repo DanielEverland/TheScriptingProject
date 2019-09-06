@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField]
+    private DefaultInputGroup defaultGroup;
+
     private IInputGroup currentInputGroup;
 
     private void Awake()
     {
-        currentInputGroup = new DefaultInputGroup();
+        currentInputGroup = defaultGroup;
     }
     private void Update()
     {
