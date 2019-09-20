@@ -10,4 +10,14 @@ public class SocketElement : MonoBehaviour, IUIInputElement
     {
 
     }
+
+    public bool ShouldDisable()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateUIElement()
+    {
+        throw new System.NotImplementedException();
+    }
 }

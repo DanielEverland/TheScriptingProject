@@ -14,6 +14,8 @@ public class DefaultInputGroup : MonoBehaviour, IInputGroup
     private List<RaycastResult> raycastResults;
     private RectTransform highlighter;
 
+    private IUIInputElement activeElement;
+
     private void Awake()
     {
         eventSystem = EventSystem.current;
@@ -28,16 +30,58 @@ public class DefaultInputGroup : MonoBehaviour, IInputGroup
         SetPointerData();
         DoRaycast();
 
-        foreach (RaycastResult result in raycastResults)
+        if(activeElement != null)
         {
-            IUIInputElement element = result.gameObject.GetComponent<IUIInputElement>();
-
-            if (element != null)
-            {
-                HighlightUIElement(element);
-                break;
-            }                
+            HandleUIElement(activeElement);
         }
+        else
+        {
+            foreach (RaycastResult result in raycastResults)
+            {
+                IUIInputElement element = result.gameObject.GetComponent<IUIInputElement>();
+
+                if (element != null)
+                {
+                    HandleUIElement(element);
+                    break;
+                }
+            }
+        }        
+    }
+    private void HandleUIElement(IUIInputElement element)
+    {
+        if(activeElement != null)
+        {
+            activeElement.UpdateUIElement();
+
+            if (activeElement.ShouldDisable())
+                DisableActiveElement();
+        }
+        else
+        {
+            PollEnableElement(element);
+        }
+    }
+    private void PollEnableElement(IUIInputElement element)
+    {
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            EnableElement(element);
+        }
+    }
+    private void EnableElement(IUIInputElement element)
+    {
+        activeElement = element;
+
+        if (activeElement is IUIInputEnableCallback enableCallbackHandler)
+            enableCallbackHandler.OnUIElementEnabled();
+    }
+    private void DisableActiveElement()
+    {
+        if (activeElement is IUIInputDisableCallback disableCallbackHandler)
+            disableCallbackHandler.OnUIElementDisabled();
+        
+        activeElement = null;
     }
     private void HighlightUIElement(IUIInputElement element)
     {

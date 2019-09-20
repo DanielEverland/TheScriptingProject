@@ -5,4 +5,7 @@ using UnityEngine;
 public interface IUIInputElement
 {
     RectTransform rectTransform { get; }
+
+    void UpdateUIElement();
+    bool ShouldDisable();
 }

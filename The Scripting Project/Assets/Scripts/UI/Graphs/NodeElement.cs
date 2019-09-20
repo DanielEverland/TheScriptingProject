@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeElement : MonoBehaviour, IUIInputElement
+public class NodeElement : MonoBehaviour, IUIInputElement, IUIInputEnableCallback
 {
     public RectTransform rectTransform => (RectTransform)transform;
 
@@ -10,6 +10,8 @@ public class NodeElement : MonoBehaviour, IUIInputElement
     private AnchorElement anchorPrefab = null;
 
     private bool hasInitialized = false;
+    private INode node = null;
+    private Vector2 previousMousePosition = Vector2.zero;
 
     public void Initialize(INode node)
     {
@@ -17,6 +19,7 @@ public class NodeElement : MonoBehaviour, IUIInputElement
             throw new System.InvalidOperationException("Node has already been initialized");
 
         hasInitialized = true;
+        this.node = node;
 
         SetName(node.GetType());
         SetScreenPosition(node.Position);
@@ -29,6 +32,25 @@ public class NodeElement : MonoBehaviour, IUIInputElement
             HandleOutputSockets(outputHandler);
     }
 
+    public void UpdateUIElement()
+    {
+        Vector2 mouseDelta = (Vector2)Input.mousePosition - previousMousePosition;
+
+        node.Position += mouseDelta / GraphUtility.NodeUnitInPixels;
+        SetScreenPosition(node.Position);
+
+        previousMousePosition = Input.mousePosition;
+    }
+
+    public bool ShouldDisable()
+    {
+        return !Input.GetKey(KeyCode.Mouse0);
+    }
+
+    public void OnUIElementEnabled()
+    {
+        previousMousePosition = Input.mousePosition;
+    }
 
     private void SetSize(Vector2 size)
     {
