@@ -30,23 +30,27 @@ public class DefaultInputGroup : MonoBehaviour, IInputGroup
         SetPointerData();
         DoRaycast();
 
-        if(activeElement != null)
+        if (activeElement != null)
         {
             HandleUIElement(activeElement);
         }
         else
         {
-            foreach (RaycastResult result in raycastResults)
-            {
-                IUIInputElement element = result.gameObject.GetComponent<IUIInputElement>();
+            PollNewActiveElement();
+        }
+    }
+    private void PollNewActiveElement()
+    {
+        foreach (RaycastResult result in raycastResults)
+        {
+            IUIInputElement element = result.gameObject.GetComponent<IUIInputElement>();
 
-                if (element != null)
-                {
-                    HandleUIElement(element);
-                    break;
-                }
+            if (element != null)
+            {
+                HandleUIElement(element);
+                break;
             }
-        }        
+        }
     }
     private void HandleUIElement(IUIInputElement element)
     {
